@@ -1,6 +1,6 @@
 /// Calculate my age in weeks
 /// Inspired by Four Thousand Weeks by Oliver Burkeman.
-use weeks::{format_local_date_time, now, parse_date_time, Case, Person, Pronoun};
+use weeks::{format_local, now, parse_date_time, Case, Person, Pronoun};
 
 fn main() {
     let now = now();
@@ -9,7 +9,7 @@ fn main() {
     let birthdate = parse_date_time("1977-04-05 11:58 -08").unwrap();
     let person = Person::new("Nathan", Pronoun::HeHim, birthdate, "British Columbia");
 
-    println!("Current time is {}\n", format_local_date_time(now));
+    println!("Current time is {}\n", format_local(now));
 
     println!("{} was born on {}.", person.name, person.birth());
     println!(

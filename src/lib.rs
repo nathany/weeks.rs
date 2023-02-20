@@ -16,7 +16,7 @@ pub fn parse_date_time(s: &str) -> ParseResult<DateTime<FixedOffset>> {
     return DateTime::parse_from_str(s, PARSE_FORMAT);
 }
 
-pub fn format_local_date_time(dt: DateTime<Local>) -> String {
+pub fn format_local(dt: DateTime<Local>) -> String {
     return format!("{}", dt.format(LOCAL_FORMAT));
 }
 
