@@ -22,6 +22,12 @@ impl Person {
             pronoun: pronoun,
         }
     }
+
+    pub fn age(&self, now: DateTime<Local>) -> String {
+        let local_birthdate = self.birthdate.with_timezone(&now.timezone());
+        let duration = Duration::new(now - local_birthdate);
+        return format!("{}", duration);
+    }
 }
 
 #[derive(Debug)]
