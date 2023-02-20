@@ -51,7 +51,7 @@ impl Person {
 
     pub fn birth(&self) -> String {
         return format!(
-            "Born on {} at {} in {} ({}).",
+            "{} at {} in {} ({})",
             self.birthdate.format(DATE_FORMAT),
             self.birthdate.format(TIME_FORMAT),
             self.birthplace,
@@ -59,22 +59,21 @@ impl Person {
         );
     }
 
-    pub fn age(&self, now: DateTime<Local>) -> String {
+    pub fn age(&self, now: DateTime<Local>) -> Age {
         let local_birthdate = self.birthdate.with_timezone(&now.timezone());
-        let duration = Duration::new(now - local_birthdate);
-        return format!("{}", duration);
+        return Age::new(now - local_birthdate);
     }
 }
 
 #[derive(Debug)]
-pub struct Duration {
+pub struct Age {
     pub weeks: i64,
     pub days: i64,
     pub hours: i64,
     pub minutes: i64,
 }
 
-impl fmt::Display for Duration {
+impl fmt::Display for Age {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
@@ -84,9 +83,9 @@ impl fmt::Display for Duration {
     }
 }
 
-impl Duration {
-    pub fn new(duration: chrono::Duration) -> Duration {
-        return Duration {
+impl Age {
+    pub fn new(duration: chrono::Duration) -> Age {
+        return Age {
             weeks: duration.num_weeks(),
             days: duration.num_days() - (duration.num_weeks() * 7),
             hours: duration.num_hours() - (duration.num_days() * 24),

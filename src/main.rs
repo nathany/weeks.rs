@@ -12,8 +12,6 @@ fn main() {
 
     println!("Current time is {}\n", format_local_date_time(now));
 
-    println!("{}", person.birth());
+    println!("Born on {}.", person.birth());
     println!("Alive for {}.", person.age(now));
-
-    println!("{:?}", person);
 }
