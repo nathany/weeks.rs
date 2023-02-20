@@ -34,6 +34,12 @@ pub enum Pronoun {
     SheHer,
 }
 
+#[derive(Debug)]
+pub enum Case {
+    Capitalize,
+    Lowercase,
+}
+
 impl Person {
     pub fn new(
         name: &str,
@@ -66,17 +72,16 @@ impl Person {
 }
 
 impl Pronoun {
-    pub fn subjective(&self, capitalized: bool) -> String {
-        if capitalized == true {
-            match self {
+    pub fn subjective(&self, case: Case) -> String {
+        match case {
+            Case::Capitalize => match self {
                 Pronoun::HeHim => "He".to_string(),
                 Pronoun::SheHer => "She".to_string(),
-            }
-        } else {
-            match self {
+            },
+            Case::Lowercase => match self {
                 Pronoun::HeHim => "he".to_string(),
                 Pronoun::SheHer => "she".to_string(),
-            }
+            },
         }
     }
 

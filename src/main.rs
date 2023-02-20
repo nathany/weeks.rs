@@ -1,6 +1,6 @@
 /// Calculate my age in weeks
 /// Inspired by Four Thousand Weeks by Oliver Burkeman.
-use weeks::{format_local_date_time, now, parse_date_time, Person, Pronoun};
+use weeks::{format_local_date_time, now, parse_date_time, Case, Person, Pronoun};
 
 fn main() {
     let now = now();
@@ -14,7 +14,7 @@ fn main() {
     println!("{} was born on {}.", person.name, person.birth());
     println!(
         "{} has been alive for {}.",
-        person.pronoun.subjective(true),
+        person.pronoun.subjective(Case::Capitalize),
         person.age(now)
     );
 }
