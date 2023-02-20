@@ -6,7 +6,7 @@ use chrono::prelude::*;
 const BIRTHDATE: &str = "1977-04-05 11:58 -08";
 
 const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M %#z";
-const DATE_FORMAT: &str = "%A %B %-d, %Y %H:%M %Z";
+const DATE_FORMAT: &str = "%A %B %-d, %Y %-I:%M %p %Z";
 
 #[derive(Debug)]
 struct Weeks {
