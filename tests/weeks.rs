@@ -1,10 +1,12 @@
-use chrono::Duration;
-use weeks::Weeks;
+use weeks::Duration;
 
 #[test]
 fn duration() {
-    let d = Duration::weeks(107) + Duration::days(5) + Duration::hours(13) + Duration::minutes(38);
-    let duration = Weeks::new(d);
+    let d = chrono::Duration::weeks(107)
+        + chrono::Duration::days(5)
+        + chrono::Duration::hours(13)
+        + chrono::Duration::minutes(38);
+    let duration = Duration::new(d);
 
     assert_eq!(duration.weeks, 107);
     assert_eq!(duration.days, 5);

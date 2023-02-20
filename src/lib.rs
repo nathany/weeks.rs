@@ -1,15 +1,14 @@
-use chrono::Duration;
 use std::fmt;
 
 #[derive(Debug)]
-pub struct Weeks {
+pub struct Duration {
     pub weeks: i64,
     pub days: i64,
     pub hours: i64,
     pub minutes: i64,
 }
 
-impl fmt::Display for Weeks {
+impl fmt::Display for Duration {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
@@ -19,9 +18,9 @@ impl fmt::Display for Weeks {
     }
 }
 
-impl Weeks {
-    pub fn new(duration: Duration) -> Weeks {
-        return Weeks {
+impl Duration {
+    pub fn new(duration: chrono::Duration) -> Duration {
+        return Duration {
             weeks: duration.num_weeks(),
             days: duration.num_days() - (duration.num_weeks() * 7),
             hours: duration.num_hours() - (duration.num_days() * 24),
