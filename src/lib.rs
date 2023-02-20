@@ -1,4 +1,28 @@
+use chrono::prelude::*;
 use std::fmt;
+
+#[derive(Debug)]
+pub struct Person {
+    pub name: String,
+    pub birthdate: DateTime<FixedOffset>,
+    pub pronoun: Pronoun,
+}
+
+#[derive(Debug)]
+pub enum Pronoun {
+    HeHim,
+    SheHer,
+}
+
+impl Person {
+    pub fn new(name: &str, birthdate: DateTime<FixedOffset>, pronoun: Pronoun) -> Person {
+        Person {
+            name: name.to_string(),
+            birthdate: birthdate,
+            pronoun: pronoun,
+        }
+    }
+}
 
 #[derive(Debug)]
 pub struct Duration {
