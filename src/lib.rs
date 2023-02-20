@@ -1,5 +1,25 @@
+use chrono::format::ParseResult;
 use chrono::prelude::*;
 use std::fmt;
+
+const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M %#z";
+const DATE_FORMAT: &str = "%A %B %-d, %Y %-I:%M %p %Z";
+
+pub fn now() -> DateTime<Local> {
+    return Local::now();
+}
+
+pub fn parse_date_time(s: &str) -> ParseResult<DateTime<FixedOffset>> {
+    return DateTime::parse_from_str(s, PARSE_FORMAT);
+}
+
+pub fn format_date_time(dt: DateTime<FixedOffset>) -> String {
+    return format!("{}", dt.format(DATE_FORMAT));
+}
+
+pub fn format_local_date_time(dt: DateTime<Local>) -> String {
+    return format!("{}", dt.format(DATE_FORMAT));
+}
 
 #[derive(Debug)]
 pub struct Person {
