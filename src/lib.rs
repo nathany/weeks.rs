@@ -3,7 +3,10 @@ use chrono::prelude::*;
 use std::fmt;
 
 const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M %#z";
-const DATE_FORMAT: &str = "%A %B %-d, %Y %-I:%M %p %Z";
+const LOCAL_FORMAT: &str = "%A, %B %-d, %Y %-I:%M %p %Z";
+const DATE_FORMAT: &str = "%A, %B %-d, %Y";
+const TIME_FORMAT: &str = "%-I:%M %p";
+const TIMEZONE_FORMAT: &str = "%Z";
 
 pub fn now() -> DateTime<Local> {
     return Local::now();
@@ -13,19 +16,16 @@ pub fn parse_date_time(s: &str) -> ParseResult<DateTime<FixedOffset>> {
     return DateTime::parse_from_str(s, PARSE_FORMAT);
 }
 
-pub fn format_date_time(dt: DateTime<FixedOffset>) -> String {
-    return format!("{}", dt.format(DATE_FORMAT));
-}
-
 pub fn format_local_date_time(dt: DateTime<Local>) -> String {
-    return format!("{}", dt.format(DATE_FORMAT));
+    return format!("{}", dt.format(LOCAL_FORMAT));
 }
 
 #[derive(Debug)]
 pub struct Person {
     pub name: String,
-    pub birthdate: DateTime<FixedOffset>,
     pub pronoun: Pronoun,
+    pub birthdate: DateTime<FixedOffset>,
+    pub birthplace: String,
 }
 
 #[derive(Debug)]
@@ -35,12 +35,28 @@ pub enum Pronoun {
 }
 
 impl Person {
-    pub fn new(name: &str, birthdate: DateTime<FixedOffset>, pronoun: Pronoun) -> Person {
+    pub fn new(
+        name: &str,
+        pronoun: Pronoun,
+        birthdate: DateTime<FixedOffset>,
+        birthplace: &str,
+    ) -> Person {
         Person {
             name: name.to_string(),
-            birthdate: birthdate,
             pronoun: pronoun,
+            birthdate: birthdate,
+            birthplace: birthplace.to_string(),
         }
+    }
+
+    pub fn birth(&self) -> String {
+        return format!(
+            "Born on {} at {} in {} ({}).",
+            self.birthdate.format(DATE_FORMAT),
+            self.birthdate.format(TIME_FORMAT),
+            self.birthplace,
+            self.birthdate.format(TIMEZONE_FORMAT)
+        );
     }
 
     pub fn age(&self, now: DateTime<Local>) -> String {
