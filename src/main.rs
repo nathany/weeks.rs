@@ -16,24 +16,28 @@ struct Weeks {
     minutes: i64,
 }
 
-fn main() {
-    let now = Local::now();
-    let birthdate = DateTime::parse_from_str(BIRTHDATE, PARSE_FORMAT).unwrap();
+fn calculate(now: DateTime<Local>, birthdate: DateTime<FixedOffset>) -> Weeks {
     let local_birthdate = birthdate.with_timezone(&now.timezone());
     let duration = now - local_birthdate;
 
-    let dur = Weeks {
+    return Weeks {
         weeks: duration.num_weeks(),
         days: duration.num_days() - (duration.num_weeks() * 7),
         hours: duration.num_hours() - (duration.num_days() * 24),
         minutes: duration.num_minutes() - (duration.num_hours() * 60),
     };
+}
+
+fn main() {
+    let now = Local::now();
+    let birthdate = DateTime::parse_from_str(BIRTHDATE, PARSE_FORMAT).unwrap();
+    let duration = calculate(now, birthdate);
 
     println!("Born on {}", birthdate.format(DATE_FORMAT));
     println!("Current time is {}\n", now.format(DATE_FORMAT));
 
     println!(
         "Alive for {} weeks, {} days, {} hours, and {} minutes",
-        dur.weeks, dur.days, dur.hours, dur.minutes
+        duration.weeks, duration.days, duration.hours, duration.minutes
     );
 }
