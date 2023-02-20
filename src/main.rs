@@ -2,7 +2,7 @@
 /// Inspired by Four Thousand Weeks by Oliver Burkeman.
 use weeks::{format_local_date_time, now, parse_date_time, Person, Pronoun};
 
-// NOTE: -08 is PST. Daylight saving time started in B.C. on Sunday, April 24, 1977.
+// NOTE: -08 is PST. Daylight Saving Time started in B.C. on Sunday, April 24, 1977.
 const BIRTHDATE: &str = "1977-04-05 11:58 -08";
 
 fn main() {
