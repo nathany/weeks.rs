@@ -1,10 +1,10 @@
 use chrono::prelude::*;
 
-const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M:%S %z";
-const DATE_FORMAT: &str = "%A %B %-d, %Y %H:%M:%S %Z";
+// NOTE: -08 is PST. Daylight saving time started in B.C. on Sunday, April 24, 1977.
+const BIRTHDATE: &str = "1977-04-05 11:58 -08";
 
-// NOTE: -08:00 is PST. Daylight saving time started in B.C. on Sunday, April 24, 1977.
-const BIRTHDATE: &str = "1977-04-05 11:58:00 -08:00";
+const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M %#z";
+const DATE_FORMAT: &str = "%A %B %-d, %Y %H:%M %Z";
 
 fn main() {
     let now = Local::now();
