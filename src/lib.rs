@@ -65,6 +65,29 @@ impl Person {
     }
 }
 
+impl Pronoun {
+    pub fn subjective(&self, capitalized: bool) -> String {
+        if capitalized == true {
+            match self {
+                Pronoun::HeHim => "He".to_string(),
+                Pronoun::SheHer => "She".to_string(),
+            }
+        } else {
+            match self {
+                Pronoun::HeHim => "he".to_string(),
+                Pronoun::SheHer => "she".to_string(),
+            }
+        }
+    }
+
+    pub fn objective(&self) -> String {
+        match self {
+            Pronoun::HeHim => "him".to_string(),
+            Pronoun::SheHer => "her".to_string(),
+        }
+    }
+}
+
 #[derive(Debug)]
 pub struct Age {
     pub weeks: i64,

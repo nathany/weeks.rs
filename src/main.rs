@@ -12,5 +12,9 @@ fn main() {
     println!("Current time is {}\n", format_local_date_time(now));
 
     println!("{} was born on {}.", person.name, person.birth());
-    println!("Alive for {}.", person.age(now));
+    println!(
+        "{} has been alive for {}.",
+        person.pronoun.subjective(true),
+        person.age(now)
+    );
 }
