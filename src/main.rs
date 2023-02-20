@@ -1,10 +1,13 @@
 use chrono::prelude::*;
 
+const INPUT_FORMAT: &str = "%Y-%m-%d %H:%M:%S %z";
+
+// NOTE: -08:00 is PST. Daylight saving time started in B.C. on Sunday, April 24, 1977.
+const BIRTH_DATE: &str = "1977-04-05 11:58:00 -08:00";
+
 fn main() {
     let now = Local::now();
-    // NOTE: -08:00 is PST. Daylight saving time started in B.C. on Sunday, April 24, 1977.
-    let birth_date =
-        DateTime::parse_from_str("1977-04-05 11:58:00 -08:00", "%Y-%m-%d %H:%M:%S %z").unwrap();
+    let birth_date = DateTime::parse_from_str(BIRTH_DATE, INPUT_FORMAT).unwrap();
     let local_birth_date = birth_date.with_timezone(&now.timezone());
     let duration = now - local_birth_date;
 
