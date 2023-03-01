@@ -5,7 +5,7 @@ use std::fmt;
 const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M %#z";
 const DATE_FORMAT: &str = "%A, %B %-d, %Y";
 const TIME_FORMAT: &str = "%-I:%M %p";
-const TIMEZONE_FORMAT: &str = "%Z";
+const TIMEZONE_FORMAT: &str = "%:z";
 
 pub fn now() -> DateTime<Local> {
     return Local::now();
@@ -15,11 +15,12 @@ pub fn parse_date_time(s: &str) -> ParseResult<DateTime<FixedOffset>> {
     return DateTime::parse_from_str(s, PARSE_FORMAT);
 }
 
-pub fn format_local(dt: DateTime<Local>) -> String {
+pub fn format_local(dt: DateTime<Local>, place: &str) -> String {
     return format!(
-        "{} at {} ({})",
+        "{} at {} in {} ({})",
         dt.format(DATE_FORMAT),
         dt.format(TIME_FORMAT),
+        place,
         dt.format(TIMEZONE_FORMAT)
     );
 }

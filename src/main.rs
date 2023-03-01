@@ -9,7 +9,7 @@ fn main() {
     let birthdate = parse_date_time("1977-04-05 11:58 -08").unwrap();
     let person = Person::new("Nathan", Pronoun::HeHim, birthdate, "British Columbia");
 
-    println!("The current time is {}.\n", format_local(now));
+    println!("The current time is {}.\n", format_local(now, "Alberta"));
 
     println!("{} was born on {}.", person.name, person.birth());
     println!(
