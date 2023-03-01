@@ -3,7 +3,6 @@ use chrono::prelude::*;
 use std::fmt;
 
 const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M %#z";
-const LOCAL_FORMAT: &str = "%A, %B %-d, %Y %-I:%M %p %Z";
 const DATE_FORMAT: &str = "%A, %B %-d, %Y";
 const TIME_FORMAT: &str = "%-I:%M %p";
 const TIMEZONE_FORMAT: &str = "%Z";
@@ -17,7 +16,12 @@ pub fn parse_date_time(s: &str) -> ParseResult<DateTime<FixedOffset>> {
 }
 
 pub fn format_local(dt: DateTime<Local>) -> String {
-    return format!("{}", dt.format(LOCAL_FORMAT));
+    return format!(
+        "{} at {} ({})",
+        dt.format(DATE_FORMAT),
+        dt.format(TIME_FORMAT),
+        dt.format(TIMEZONE_FORMAT)
+    );
 }
 
 #[derive(Debug)]
