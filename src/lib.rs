@@ -5,24 +5,24 @@ use std::fmt;
 const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M %#z";
 const DATE_FORMAT: &str = "%A, %B %-d, %Y";
 const TIME_FORMAT: &str = "%-I:%M %p";
-const TIMEZONE_FORMAT: &str = "%:z";
+const TIMEZONE_FORMAT: &str = "%Z";
 
 pub fn now() -> DateTime<Local> {
-    return Local::now();
+    Local::now()
 }
 
 pub fn parse_date_time(s: &str) -> ParseResult<DateTime<FixedOffset>> {
-    return DateTime::parse_from_str(s, PARSE_FORMAT);
+    DateTime::parse_from_str(s, PARSE_FORMAT)
 }
 
 pub fn format_local(dt: DateTime<Local>, place: &str) -> String {
-    return format!(
+    format!(
         "{} at {} in {} ({})",
         dt.format(DATE_FORMAT),
         dt.format(TIME_FORMAT),
         place,
         dt.format(TIMEZONE_FORMAT)
-    );
+    )
 }
 
 #[derive(Debug)]
@@ -54,25 +54,25 @@ impl Person {
     ) -> Person {
         Person {
             name: name.to_string(),
-            pronoun: pronoun,
-            birthdate: birthdate,
+            pronoun,
+            birthdate,
             birthplace: birthplace.to_string(),
         }
     }
 
     pub fn birth(&self) -> String {
-        return format!(
+        format!(
             "{} at {} in {} ({})",
             self.birthdate.format(DATE_FORMAT),
             self.birthdate.format(TIME_FORMAT),
             self.birthplace,
             self.birthdate.format(TIMEZONE_FORMAT)
-        );
+        )
     }
 
     pub fn age(&self, now: DateTime<Local>) -> Age {
         let local_birthdate = self.birthdate.with_timezone(&now.timezone());
-        return Age::new(now - local_birthdate);
+        Age::new(now - local_birthdate)
     }
 }
 
@@ -118,11 +118,11 @@ impl fmt::Display for Age {
 
 impl Age {
     pub fn new(duration: chrono::Duration) -> Age {
-        return Age {
+        Age {
             weeks: duration.num_weeks(),
             days: duration.num_days() - (duration.num_weeks() * 7),
             hours: duration.num_hours() - (duration.num_days() * 24),
             minutes: duration.num_minutes() - (duration.num_hours() * 60),
-        };
+        }
     }
 }
