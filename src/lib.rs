@@ -17,64 +17,13 @@ pub fn format_local(dt: DateTime<Local>) -> String {
     dt.format(TIME_FORMAT).to_string()
 }
 
-#[derive(Debug)]
-pub struct Person {
-    pub name: String,
-    pub pronoun: Pronoun,
-    pub birthdate: DateTime<FixedOffset>,
+pub fn format_birthdate(dt: DateTime<FixedOffset>) -> String {
+    dt.format(TIME_FORMAT).to_string()
 }
 
-#[derive(Debug)]
-pub enum Pronoun {
-    HeHim,
-    SheHer,
-}
-
-#[derive(Debug)]
-pub enum Case {
-    Capitalize,
-    Lowercase,
-}
-
-impl Person {
-    pub fn new(name: &str, pronoun: Pronoun, birthdate: DateTime<FixedOffset>) -> Person {
-        Person {
-            name: name.to_string(),
-            pronoun,
-            birthdate,
-        }
-    }
-
-    pub fn birth(&self) -> String {
-        self.birthdate.format(TIME_FORMAT).to_string()
-    }
-
-    pub fn age(&self, now: DateTime<Local>) -> Age {
-        let local_birthdate = self.birthdate.with_timezone(&now.timezone());
-        Age::new(now - local_birthdate)
-    }
-}
-
-impl Pronoun {
-    pub fn subjective(&self, case: Case) -> String {
-        match case {
-            Case::Capitalize => match self {
-                Pronoun::HeHim => "He".to_string(),
-                Pronoun::SheHer => "She".to_string(),
-            },
-            Case::Lowercase => match self {
-                Pronoun::HeHim => "he".to_string(),
-                Pronoun::SheHer => "she".to_string(),
-            },
-        }
-    }
-
-    pub fn objective(&self) -> String {
-        match self {
-            Pronoun::HeHim => "him".to_string(),
-            Pronoun::SheHer => "her".to_string(),
-        }
-    }
+pub fn age(birthdate: DateTime<FixedOffset>, now: DateTime<Local>) -> Age {
+    let local_birthdate = birthdate.with_timezone(&now.timezone());
+    Age::new(now - local_birthdate)
 }
 
 #[derive(Debug)]
