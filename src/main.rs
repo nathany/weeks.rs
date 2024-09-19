@@ -1,6 +1,5 @@
 /// Calculate my age in weeks
 /// Inspired by Four Thousand Weeks by Oliver Burkeman.
-use chrono::format::ParseResult;
 use chrono::prelude::*;
 
 const NAME: &str = "Nathan";
@@ -13,7 +12,7 @@ const TIME_FORMAT: &str = "%A, %B %-d, %Y at %-I:%M %p (%Z)";
 
 fn main() {
     let now = now();
-    let birthdate = parse_date_time(BIRTH_TIME).unwrap();
+    let birthdate = parse_date_time(BIRTH_TIME);
     let (weeks, days, hours, minutes) = age(birthdate, now);
 
     println!("The current time is {}.\n", now.format(TIME_FORMAT));
@@ -28,8 +27,8 @@ fn now() -> DateTime<FixedOffset> {
     Local::now().fixed_offset()
 }
 
-fn parse_date_time(s: &str) -> ParseResult<DateTime<FixedOffset>> {
-    DateTime::parse_from_str(s, PARSE_FORMAT)
+fn parse_date_time(s: &str) -> DateTime<FixedOffset> {
+    DateTime::parse_from_str(s, PARSE_FORMAT).unwrap()
 }
 
 fn age(birthdate: DateTime<FixedOffset>, now: DateTime<FixedOffset>) -> (i64, i64, i64, i64) {
@@ -51,8 +50,8 @@ mod test {
     #[test]
     fn test_age() {
         // -06:00 is MDT.
-        let now = parse_date_time("2024-09-18 19:27 -06").unwrap();
-        let birthdate = parse_date_time("1977-04-05 11:58 -08").unwrap();
+        let now = parse_date_time("2024-09-18 19:27 -06");
+        let birthdate = parse_date_time("1977-04-05 11:58 -08");
         let (weeks, days, hours, minutes) = age(birthdate, now);
 
         assert_eq!(weeks, 2476, "expected 2476 weeks, got {}", weeks);
