@@ -5,14 +5,14 @@ use chrono::prelude::*;
 const NAME: &str = "Nathan";
 const PRONOUN: &str = "He";
 // NOTE: -08:00 is PST. Daylight Saving Time started in B.C. on Sunday, April 24, 1977.
-const BIRTH_TIME: &str = "1977-04-05 11:58 -08:00";
+const BIRTHDATE: &str = "1977-04-05 11:58 -08:00";
 
 const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M %:z";
 const TIME_FORMAT: &str = "%A, %B %-d, %Y at %-I:%M %p (%:z)";
 
 fn main() {
     let now = now();
-    let birthdate = parse_date_time(BIRTH_TIME);
+    let birthdate = parse_date_time(BIRTHDATE);
     let (weeks, days, hours, minutes) = age(birthdate, now);
 
     println!("The current time is {}.\n", now.format(TIME_FORMAT));
