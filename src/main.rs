@@ -5,10 +5,10 @@ use chrono::prelude::*;
 const NAME: &str = "Nathan";
 const PRONOUN: &str = "He";
 // NOTE: -08 is PST. Daylight Saving Time started in B.C. on Sunday, April 24, 1977.
-const BIRTH_TIME: &str = "1977-04-05 11:58 -08";
+const BIRTH_TIME: &str = "1977-04-05 11:58 -0800";
 
-const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M %#z";
-const TIME_FORMAT: &str = "%A, %B %-d, %Y at %-I:%M %p (%Z)";
+const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M %z";
+const TIME_FORMAT: &str = "%A, %B %-d, %Y at %-I:%M %p (%:z)";
 
 fn main() {
     let now = now();
@@ -48,10 +48,17 @@ mod test {
     use super::*;
 
     #[test]
+    fn test_parse_date_time() {
+        let s = "2024-09-18 19:27 -0600";
+        let dt = parse_date_time(s);
+        assert_eq!(dt.format(PARSE_FORMAT).to_string(), s);
+    }
+
+    #[test]
     fn test_age() {
         // -06:00 is MDT.
-        let now = parse_date_time("2024-09-18 19:27 -06");
-        let birthdate = parse_date_time("1977-04-05 11:58 -08");
+        let now = parse_date_time("2024-09-18 19:27 -0600");
+        let birthdate = parse_date_time("1977-04-05 11:58 -0800");
         let (weeks, days, hours, minutes) = age(birthdate, now);
 
         assert_eq!(weeks, 2476, "expected 2476 weeks, got {}", weeks);
