@@ -2,7 +2,6 @@
 /// Inspired by Four Thousand Weeks by Oliver Burkeman.
 use chrono::format::ParseResult;
 use chrono::prelude::*;
-use std::fmt;
 
 const NAME: &str = "Nathan";
 const PRONOUN: &str = "He";
@@ -13,51 +12,33 @@ const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M %#z";
 const TIME_FORMAT: &str = "%A, %B %-d, %Y at %-I:%M %p (%Z)";
 
 fn main() {
-    let now = Local::now();
+    let now = Local::now().fixed_offset();
     let birthdate = parse_date_time(BIRTH_TIME).unwrap();
 
     println!("The current time is {}.\n", now.format(TIME_FORMAT));
 
     println!("{} was born on {}.", NAME, birthdate.format(TIME_FORMAT));
-    println!("{} has been alive for {}.", PRONOUN, age(birthdate, now));
+    let (weeks, days, hours, minutes) = age(birthdate, now);
+    println!(
+        "{} has been alive for {} weeks, {} days, {} hours and {} minutes.",
+        PRONOUN, weeks, days, hours, minutes
+    );
 }
 
 pub fn parse_date_time(s: &str) -> ParseResult<DateTime<FixedOffset>> {
     DateTime::parse_from_str(s, PARSE_FORMAT)
 }
 
-pub fn age(birthdate: DateTime<FixedOffset>, now: DateTime<Local>) -> Age {
+pub fn age(birthdate: DateTime<FixedOffset>, now: DateTime<FixedOffset>) -> (i64, i64, i64, i64) {
     let local_birthdate = birthdate.with_timezone(&now.timezone());
-    Age::new(now - local_birthdate)
-}
+    let duration = now - local_birthdate;
 
-#[derive(Debug)]
-pub struct Age {
-    pub weeks: i64,
-    pub days: i64,
-    pub hours: i64,
-    pub minutes: i64,
-}
+    let weeks = duration.num_weeks();
+    let days = duration.num_days() - (duration.num_weeks() * 7);
+    let hours = duration.num_hours() - (duration.num_days() * 24);
+    let minutes = duration.num_minutes() - (duration.num_hours() * 60);
 
-impl fmt::Display for Age {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "{} weeks, {} days, {} hours and {} minutes",
-            self.weeks, self.days, self.hours, self.minutes
-        )
-    }
-}
-
-impl Age {
-    pub fn new(duration: chrono::Duration) -> Age {
-        Age {
-            weeks: duration.num_weeks(),
-            days: duration.num_days() - (duration.num_weeks() * 7),
-            hours: duration.num_hours() - (duration.num_days() * 24),
-            minutes: duration.num_minutes() - (duration.num_hours() * 60),
-        }
-    }
+    (weeks, days, hours, minutes)
 }
 
 #[cfg(test)]
@@ -65,21 +46,22 @@ mod test {
     use super::*;
 
     #[test]
-    fn age() {
-        let duration = chrono::Duration::weeks(107)
-            + chrono::Duration::days(5)
-            + chrono::Duration::hours(13)
-            + chrono::Duration::minutes(38);
-        let age = Age::new(duration);
+    fn test_age() {
+        let now = Local
+            .from_local_datetime(
+                &NaiveDate::from_ymd_opt(2024, 9, 18)
+                    .unwrap()
+                    .and_hms_milli_opt(19, 27, 0, 0)
+                    .unwrap(),
+            )
+            .unwrap();
 
-        assert_eq!(age.weeks, 107);
-        assert_eq!(age.days, 5);
-        assert_eq!(age.hours, 13);
-        assert_eq!(age.minutes, 38);
+        let birthdate = parse_date_time("1977-04-05 11:58 -08").unwrap();
+        let (weeks, days, hours, minutes) = age(birthdate, now.fixed_offset());
 
-        assert_eq!(
-            format!("{}", age),
-            "107 weeks, 5 days, 13 hours and 38 minutes"
-        )
+        assert_eq!(weeks, 2476);
+        assert_eq!(days, 1);
+        assert_eq!(hours, 5);
+        assert_eq!(minutes, 29);
     }
 }
