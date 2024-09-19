@@ -101,7 +101,7 @@ impl fmt::Display for Age {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
-            "{} weeks, {} days, {} hours, and {} minutes",
+            "{} weeks, {} days, {} hours and {} minutes",
             self.weeks, self.days, self.hours, self.minutes
         )
     }
@@ -137,7 +137,7 @@ mod test {
 
         assert_eq!(
             format!("{}", age),
-            "107 weeks, 5 days, 13 hours, and 38 minutes"
+            "107 weeks, 5 days, 13 hours and 38 minutes"
         )
     }
 }
