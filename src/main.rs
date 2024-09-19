@@ -1,5 +1,5 @@
-/// Calculate my age in weeks
-/// Inspired by Four Thousand Weeks by Oliver Burkeman.
+// Calculate my age in weeks
+// Inspired by Four Thousand Weeks by Oliver Burkeman.
 use chrono::prelude::*;
 
 const NAME: &str = "Nathan";
