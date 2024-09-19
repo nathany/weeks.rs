@@ -15,12 +15,11 @@ pub fn parse_date_time(s: &str) -> ParseResult<DateTime<FixedOffset>> {
     DateTime::parse_from_str(s, PARSE_FORMAT)
 }
 
-pub fn format_local(dt: DateTime<Local>, place: &str) -> String {
+pub fn format_local(dt: DateTime<Local>) -> String {
     format!(
-        "{} at {} in {} ({})",
+        "{} at {} ({})",
         dt.format(DATE_FORMAT),
         dt.format(TIME_FORMAT),
-        place,
         dt.format(TIMEZONE_FORMAT)
     )
 }
@@ -30,7 +29,6 @@ pub struct Person {
     pub name: String,
     pub pronoun: Pronoun,
     pub birthdate: DateTime<FixedOffset>,
-    pub birthplace: String,
 }
 
 #[derive(Debug)]
@@ -46,26 +44,19 @@ pub enum Case {
 }
 
 impl Person {
-    pub fn new(
-        name: &str,
-        pronoun: Pronoun,
-        birthdate: DateTime<FixedOffset>,
-        birthplace: &str,
-    ) -> Person {
+    pub fn new(name: &str, pronoun: Pronoun, birthdate: DateTime<FixedOffset>) -> Person {
         Person {
             name: name.to_string(),
             pronoun,
             birthdate,
-            birthplace: birthplace.to_string(),
         }
     }
 
     pub fn birth(&self) -> String {
         format!(
-            "{} at {} in {} ({})",
+            "{} at {} ({})",
             self.birthdate.format(DATE_FORMAT),
             self.birthdate.format(TIME_FORMAT),
-            self.birthplace,
             self.birthdate.format(TIMEZONE_FORMAT)
         )
     }

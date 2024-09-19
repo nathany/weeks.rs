@@ -7,9 +7,9 @@ fn main() {
 
     // NOTE: -08 is PST. Daylight Saving Time started in B.C. on Sunday, April 24, 1977.
     let birthdate = parse_date_time("1977-04-05 11:58 -08").unwrap();
-    let person = Person::new("Nathan", Pronoun::HeHim, birthdate, "British Columbia");
+    let person = Person::new("Nathan", Pronoun::HeHim, birthdate);
 
-    println!("The current time is {}.\n", format_local(now, "Alberta"));
+    println!("The current time is {}.\n", format_local(now));
 
     println!("{} was born on {}.", person.name, person.birth());
     println!(
