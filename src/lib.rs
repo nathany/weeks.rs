@@ -3,9 +3,7 @@ use chrono::prelude::*;
 use std::fmt;
 
 const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M %#z";
-const DATE_FORMAT: &str = "%A, %B %-d, %Y";
-const TIME_FORMAT: &str = "%-I:%M %p";
-const TIMEZONE_FORMAT: &str = "%Z";
+const TIME_FORMAT: &str = "%A, %B %-d, %Y at %-I:%M %p (%Z)";
 
 pub fn now() -> DateTime<Local> {
     Local::now()
@@ -16,12 +14,7 @@ pub fn parse_date_time(s: &str) -> ParseResult<DateTime<FixedOffset>> {
 }
 
 pub fn format_local(dt: DateTime<Local>) -> String {
-    format!(
-        "{} at {} ({})",
-        dt.format(DATE_FORMAT),
-        dt.format(TIME_FORMAT),
-        dt.format(TIMEZONE_FORMAT)
-    )
+    dt.format(TIME_FORMAT).to_string()
 }
 
 #[derive(Debug)]
@@ -53,12 +46,7 @@ impl Person {
     }
 
     pub fn birth(&self) -> String {
-        format!(
-            "{} at {} ({})",
-            self.birthdate.format(DATE_FORMAT),
-            self.birthdate.format(TIME_FORMAT),
-            self.birthdate.format(TIMEZONE_FORMAT)
-        )
+        self.birthdate.format(TIME_FORMAT).to_string()
     }
 
     pub fn age(&self, now: DateTime<Local>) -> Age {
