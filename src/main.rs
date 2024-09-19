@@ -4,7 +4,7 @@ use chrono::prelude::*;
 
 const NAME: &str = "Nathan";
 const PRONOUN: &str = "He";
-// NOTE: -08 is PST. Daylight Saving Time started in B.C. on Sunday, April 24, 1977.
+// NOTE: -08:00 is PST. Daylight Saving Time started in B.C. on Sunday, April 24, 1977.
 const BIRTH_TIME: &str = "1977-04-05 11:58 -08:00";
 
 const PARSE_FORMAT: &str = "%Y-%m-%d %H:%M %:z";
@@ -44,7 +44,7 @@ fn age(birthdate: DateTime<FixedOffset>, now: DateTime<FixedOffset>) -> (i64, i6
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use super::*;
 
     #[test]
