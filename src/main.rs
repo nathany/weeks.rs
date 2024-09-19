@@ -61,9 +61,9 @@ mod tests {
         let birthdate = parse_date_time("1977-04-05 11:58 -08:00");
         let (weeks, days, hours, minutes) = age(birthdate, now);
 
-        assert_eq!(weeks, 2476, "expected 2476 weeks, got {}", weeks);
-        assert_eq!(days, 1, "expected 1 days, got {}", days);
-        assert_eq!(hours, 5, "expected 5 hours, got {}", hours);
-        assert_eq!(minutes, 29, "expected 29 minutes, got {}", minutes);
+        assert_eq!(weeks, 2476);
+        assert_eq!(days, 1);
+        assert_eq!(hours, 5);
+        assert_eq!(minutes, 29);
     }
 }
