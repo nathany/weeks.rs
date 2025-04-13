@@ -12,14 +12,13 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
       - name: Build
-        run: cargo build --verbose
+        run: cargo build
       - name: Run tests
-        run: cargo test --verbose
+        run: cargo test
       - name: Run clippy
-        run: cargo clippy --verbose
+        run: cargo clippy
       - name: Run rustfmt
-        run: cargo fmt --check --verbose
+        run: cargo fmt --check
