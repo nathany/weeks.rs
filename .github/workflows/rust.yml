@@ -17,7 +17,8 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain-file: rust-toolchain.toml
+          toolchain: 1.87.0
+          components: clippy, rustfmt
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
       - name: Build
